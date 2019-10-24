@@ -1,5 +1,6 @@
 package me.hetian.flutter_qr_reader.factorys;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 
 import java.util.Map;
@@ -19,6 +20,7 @@ public class QrReaderFactory extends PlatformViewFactory {
         this.registrar = registrar;
     }
 
+    @SuppressLint("NewApi")
     @Override
     public PlatformView create(Context context, int id, Object args) {
         Map<String, Object> params = (Map<String, Object>) args;
