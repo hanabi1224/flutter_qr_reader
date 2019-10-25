@@ -4,6 +4,7 @@ import android.app.ActionBar
 import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.graphics.Rect
 import android.hardware.Camera
 import android.os.Build
 import android.os.Bundle
@@ -163,6 +164,10 @@ private class CustomCameraParametersCallbackCallback: CameraParametersCallback {
         if (ret.supportedSceneModes.contains(Camera.Parameters.SCENE_MODE_BARCODE)) {
             ret.sceneMode = Camera.Parameters.SCENE_MODE_BARCODE
         }
+
+        val focusArea = listOf<Camera.Area>(Camera.Area(Rect(-100, -100, 100, 100), 1000))
+        ret.meteringAreas = focusArea
+        ret.focusAreas = focusArea
 
         return ret
     }
