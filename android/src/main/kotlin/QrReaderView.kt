@@ -93,7 +93,7 @@ class QrReaderView(private val context: Context, private val registrar: PluginRe
         val settings = barcode.cameraSettings
         settings.isBarcodeSceneModeEnabled = true
         settings.isAutoFocusEnabled = true
-        //settings.isAutoTorchEnabled = true
+        settings.isAutoTorchEnabled = true
         settings.isContinuousFocusEnabled = true
         settings.isExposureEnabled = true
         settings.isMeteringEnabled = true
