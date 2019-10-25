@@ -25,8 +25,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    buildToolsVersion '28.0.3'
-    compileSdkVersion 28
+    buildToolsVersion '29.0.2'
+    compileSdkVersion 29
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -50,7 +50,7 @@ dependencies {
 
     implementation('com.journeyapps:zxing-android-embedded:3.6.0') { transitive = false }
     implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'com.google.zxing:core:3.3.0'
+    implementation 'com.google.zxing:core:3.3.3'
 
     //implementation files('/Users/hanabi1224/sdk/flutter/bin/cache/artifacts/engine/android-x64/flutter.jar')
 }

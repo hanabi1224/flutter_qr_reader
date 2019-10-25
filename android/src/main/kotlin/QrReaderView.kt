@@ -4,6 +4,7 @@ import android.app.ActionBar
 import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.hardware.Camera
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -15,6 +16,7 @@ import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult
 import com.journeyapps.barcodescanner.BarcodeView
 import com.journeyapps.barcodescanner.DefaultDecoderFactory
+import com.journeyapps.barcodescanner.camera.CameraParametersCallback
 import com.journeyapps.barcodescanner.camera.CenterCropStrategy
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -91,11 +93,12 @@ class QrReaderView(private val context: Context, private val registrar: PluginRe
         val settings = barcode.cameraSettings
         settings.isBarcodeSceneModeEnabled = true
         settings.isAutoFocusEnabled = true
-        settings.isAutoTorchEnabled = true
-        //settings.isContinuousFocusEnabled = true
+        //settings.isAutoTorchEnabled = true
+        settings.isContinuousFocusEnabled = true
         settings.isExposureEnabled = true
         settings.isMeteringEnabled = true
         barcode.cameraSettings = settings
+        barcode.changeCameraParameters(CustomCameraParametersCallbackCallback());
         barcode.decodeContinuous(
                 object : BarcodeCallback {
                     override fun barcodeResult(result: BarcodeResult) {
@@ -138,5 +141,29 @@ class QrReaderView(private val context: Context, private val registrar: PluginRe
     override fun dispose() {
         barcodeView?.pause()
         barcodeView = null
+    }
+}
+
+private class CustomCameraParametersCallbackCallback: CameraParametersCallback {
+    override fun changeCameraParameters(parameters: Camera.Parameters?): Camera.Parameters {
+        val ret = parameters!!
+        ret.removeGpsData()
+        if(ret.isZoomSupported){
+            ret.zoom = minOf(2, ret.maxZoom)
+        }
+
+        if (ret.isAutoWhiteBalanceLockSupported) {
+            ret.autoWhiteBalanceLock = false
+        }
+
+        if (ret.isAutoExposureLockSupported) {
+            ret.autoExposureLock = false
+        }
+
+        if (ret.supportedSceneModes.contains(Camera.Parameters.SCENE_MODE_BARCODE)) {
+            ret.sceneMode = Camera.Parameters.SCENE_MODE_BARCODE
+        }
+
+        return ret
     }
 }
