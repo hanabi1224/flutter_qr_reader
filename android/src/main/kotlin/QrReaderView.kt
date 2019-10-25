@@ -15,6 +15,7 @@ import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult
 import com.journeyapps.barcodescanner.BarcodeView
 import com.journeyapps.barcodescanner.DefaultDecoderFactory
+import com.journeyapps.barcodescanner.camera.CenterCropStrategy
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.PluginRegistry
@@ -25,9 +26,6 @@ import java.util.*
 class QrReaderView(private val context: Context, private val registrar: PluginRegistry.Registrar, id: Int, params:Map<String, Object>) :
         PlatformView, MethodChannel.MethodCallHandler {
     var barcodeView: BarcodeView? = null
-    private val activity = registrar.activity()
-    var cameraPermissionContinuation: Runnable? = null
-    var requestingPermission = false
     private var isTorchOn: Boolean = false
     private val width:Int
     private val height:Int
@@ -89,6 +87,15 @@ class QrReaderView(private val context: Context, private val registrar: PluginRe
     private fun createBarCodeView(): BarcodeView? {
         val barcode = BarcodeView(registrar.activity())
         barcode.decoderFactory = DefaultDecoderFactory (listOf(BarcodeFormat.QR_CODE), null, null, Intents.Scan.MIXED_SCAN)
+        barcode.previewScalingStrategy = CenterCropStrategy()
+        val settings = barcode.cameraSettings
+        settings.isBarcodeSceneModeEnabled = true
+        settings.isAutoFocusEnabled = true
+        settings.isAutoTorchEnabled = true
+        //settings.isContinuousFocusEnabled = true
+        settings.isExposureEnabled = true
+        settings.isMeteringEnabled = true
+        barcode.cameraSettings = settings
         barcode.decodeContinuous(
                 object : BarcodeCallback {
                     override fun barcodeResult(result: BarcodeResult) {

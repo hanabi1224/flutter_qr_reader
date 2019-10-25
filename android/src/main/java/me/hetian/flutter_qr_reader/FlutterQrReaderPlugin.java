@@ -78,33 +78,4 @@ public class FlutterQrReaderPlugin implements MethodCallHandler {
       }
     }.execute(filePath);
   }
-
-//  @TargetApi(Build.VERSION_CODES.M)
-//  private void checkPermissions(final PermissionsResult result) {
-//    if (!(registrar.activity().checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED)) {
-//      registrar.addRequestPermissionsResultListener(new PluginRegistry.RequestPermissionsResultListener() {
-//        @Override
-//        public boolean onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-//          if (requestCode == REQUEST_CODE_CAMERA_PERMISSION) {
-//            for (int i = 0; i < permissions.length; i++) {
-//              String permission = permissions[i];
-//              int grantResult = grantResults[i];
-//
-//              if (permission.equals(Manifest.permission.CAMERA)) {
-//                if (grantResult == PackageManager.PERMISSION_GRANTED) {
-//                  result.onSuccess();
-//                } else {
-//                  result.onError();
-//                }
-//              }
-//            }
-//          }
-//          return false;
-//        }
-//      });
-//      registrar.activity().requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_CAMERA_PERMISSION);
-//    } else {
-//      result.onSuccess();
-//    }
-//  }
 }
