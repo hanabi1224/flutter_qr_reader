@@ -146,6 +146,7 @@ class QrReaderView(private val context: Context, private val registrar: PluginRe
 }
 
 private class CustomCameraParametersCallbackCallback: CameraParametersCallback {
+    @RequiresApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     override fun changeCameraParameters(parameters: Camera.Parameters?): Camera.Parameters {
         val ret = parameters!!
         ret.removeGpsData()
@@ -165,9 +166,9 @@ private class CustomCameraParametersCallbackCallback: CameraParametersCallback {
             ret.sceneMode = Camera.Parameters.SCENE_MODE_BARCODE
         }
 
-        val focusArea = listOf<Camera.Area>(Camera.Area(Rect(-100, -100, 100, 100), 1000))
-        ret.meteringAreas = focusArea
-        ret.focusAreas = focusArea
+//        val focusArea = listOf<Camera.Area>(Camera.Area(Rect(-100, -100, 100, 100), 1000))
+//        ret.meteringAreas = focusArea
+//        ret.focusAreas = focusArea
 
         return ret
     }
