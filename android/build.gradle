@@ -2,14 +2,14 @@ group 'me.hetian.flutter_qr_reader'
 version '1.0-SNAPSHOT'
 
 buildscript {
-    ext.kotlin_version = '1.3.50'
+    ext.kotlin_version = '1.3.70'
     repositories {
         google()
         jcenter()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.0'
+        classpath 'com.android.tools.build:gradle:3.5.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -47,9 +47,14 @@ dependencies {
     //implementation 'com.journeyapps:zxing-android-embedded:4.0.0'
     //implementation 'androidx.appcompat:appcompat:1.0.2'
 
-    implementation('com.journeyapps:zxing-android-embedded:3.6.0') { transitive = false }
+    // https://github.com/journeyapps/zxing-android-embedded
+    // Alternative: https://github.com/bingoogolapple/BGAQRCode-Android
+    implementation('com.journeyapps:zxing-android-embedded:4.1.0') { transitive = false }
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.google.zxing:core:3.3.3'
 
-    //implementation files('/Users/hanabi1224/sdk/flutter/bin/cache/artifacts/engine/android-x64/flutter.jar')
+    if (System.env.FLUTTER_ROOT != null) {
+        println "FLUTTER_ROOT: $System.env.FLUTTER_ROOT"
+        debugCompileOnly files(System.env.FLUTTER_ROOT + "/bin/cache/artifacts/engine/android-x64/flutter.jar")
+    }
 }
